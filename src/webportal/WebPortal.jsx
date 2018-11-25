@@ -17,7 +17,7 @@ class WebPortal extends Component {
     const { currentUserEmail, currentUserName } = this.state;
     return (
       <div>
-        <h1>Welcome {currentUserName}</h1>
+        <h1>Name: {currentUserName}</h1>
         <p>Email: {currentUserEmail}</p>
         <p>You made it to the payroll web portal</p>
       </div>
