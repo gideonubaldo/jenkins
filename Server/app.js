@@ -7,17 +7,18 @@ var mysql = require('mysql');
 var SqlString = require('sqlstring');
 var app = express();
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'zaq46',
-  database: 'employees'
-});
+
+var connection = mysql.createConnection("mysql://q0atg38pdhqyl3gv:k1jdiqoonnkd4xhf@zf4nk2bcqjvif4in.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/oyiptuzk7t4s86ko")
 
 connection.connect(function (err) {
   if (err) throw err
   console.log('You are now connected...')
 })
+
+app.use(express.static(path.join(__dirname, 'public')))
+ // .set('views', path.join(__dirname, 'views'))
+ // .set('view engine', 'ejs')
+//  .get('/', (req, res) => res.render('pages/index'))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
