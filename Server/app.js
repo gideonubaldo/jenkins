@@ -3,32 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mysql = require('mysql')
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
+var mysql = require('mysql');
+var SqlString = require('sqlstring');
 var app = express();
 
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'zaq46',
-  database : 'employees'
+  host: 'localhost',
+  user: 'root',
+  password: 'zaq46',
+  database: 'employees'
 });
-connection.connect(function(err) {
+
+connection.connect(function (err) {
   if (err) throw err
   console.log('You are now connected...')
 })
-
-connection.query('select first_name from employees where first_name = "Georgi"', function (err, rows, fields) {
-  if (err) throw err
-
-  console.log('The solution is: ', rows)
-})
-  
-console.log("check")
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,15 +29,63 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.get('/api/get30Rows', (req, res) => {
 
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+  connection.query('select * from employees limit 30', function (err, rows, fields) {
+    if (err) throw err
+    console.log('The solution is: ', rows)
+    res.send({ rows: rows });
+  })
 });
 
-// error handler
-app.use(function(err, req, res, next) {
+app.get('/api/getTotalCount', (req, res) => {
+
+  connection.query('select count(*) as totalCount from employees', function (err, c, fields) {
+    if (err) throw err
+    console.log('Total count: ', c[0].totalCount)
+    res.send({ totalCount: c[0].totalCount });
+  })
+});
+
+//employee = [emp_no: '000', birth_date: '00', first_name: 'Winnie', last_name: 'Australia', gender: 'M', hire_date: '000'];
+app.get('/api/create', (req, res) => {
+
+  var sql = SqlString.format('insert into employees set emp_no = ?,birth_date = ?,first_name = ?,last_name = ?,gender = ?,hire_date = ?'
+    , [req.query.emp_no, req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date])
+
+  console.log(sql)
+
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err;
+    console.log('Created', result);
+    res.send({ result: result });
+  })
+});
+
+//employee = [emp_no: '000', birth_date: '00', first_name: 'Winnie', last_name: 'Australia', gender: 'M', hire_date: '000'];
+app.get('/api/update', (req, res) => {
+
+  var sql = SqlString.format('update employees set birth_date = ?,first_name = ?,last_name = ?,gender = ?,hire_date = ? where emp_no = ?',
+    [req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date, req.query.emp_no])
+  console.log(sql)
+  connection.query(sql,
+    req, function (err, result, fields) {
+      if (err) throw err
+      console.log(result, result)
+    })
+});
+
+//delete with emp_no
+app.get('/api/delete', (req, res) => {
+  console.log("req is " + req.query.emp_no)
+  connection.query('delete from employees where emp_no =' + req.query.emp_no, function (err, result, fields) {
+    if (err) throw err;
+    console.log('Deleted', result);
+    res.send({ result: result });
+  })
+});
+
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -59,7 +96,9 @@ app.use(function(err, req, res, next) {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next(createError(404));
 });
 

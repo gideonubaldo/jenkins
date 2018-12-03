@@ -14,7 +14,8 @@
     "morgan": "~1.9.0",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.7",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "sqlstring": "^2.3.1"
   },
   "main": "app.js",
   "devDependencies": {},
