@@ -106,9 +106,6 @@ export default withStyles(styles)(
                 >
                   Tabs
                 </Typography>
-                <Button href="/" color="inherit">
-                  Home
-                </Button>
                 {logInOut}
               </Toolbar>
             </AppBar>
