@@ -76,24 +76,24 @@ class Employee extends Component {
   render() {
     const positions = [
       {
-        value: "accountant",
-        label: "accountant"
+        value: "Accountant",
+        label: "Accountant"
       },
       {
-        value: "janitor",
-        label: "janitor"
+        value: "Janitor",
+        label: "Janitor"
       },
       {
-        value: "manager",
-        label: "manager"
+        value: "Manager",
+        label: "Manager"
       },
       {
-        value: "lead",
-        label: "lead"
+        value: "Lead",
+        label: "Lead"
       },
       {
-        value: "intern",
-        label: "intern"
+        value: "Intern",
+        label: "Intern"
       },
       {
         value: "Supervisor",
