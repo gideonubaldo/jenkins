@@ -15,26 +15,26 @@ const config = {
 };
 
 class App extends Component {
-  // state = {
-  //   response: '',
-  //   post: '',
-  //   responseToPost: '',
-  // };
+  state = {
+    response: '',
+    post: '',
+    responseToPost: '',
+  };
   
-  // componentDidMount() {
-  //   this.callApi()
-  //     .then(res => this.setState({ response: res.express }))
-  //     .catch(err => console.log(err));
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
 
 
-  // }
+  }
 
   // callApi = async () => {
 
   //   const employee = {
   //     emp_no: '10001',
   //     birth_date: '1953-09-02',
-  //     first_name: 'Georgi',window.location.origin
+  //     first_name: 'Georgi',
   //     last_name: 'Facello',
   //     gender: 'M',
   //     hire_date: '1986-06-26',
@@ -52,6 +52,22 @@ class App extends Component {
 
   //   return body;
   // };
+
+  callApi = async () => {
+
+    const id = {
+      emp_no: '10001',
+    }
+
+    const url = new URL('http://localhost:3000/api/employee')
+    url.search = new URLSearchParams(id)
+    const response = await fetch(url);
+    const body = await response.json();
+    console.log(body);
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
 
   render() {
     return (

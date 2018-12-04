@@ -87,6 +87,16 @@ app.get('/api/delete', (req, res) => {
   })
 });
 
+// search by emp_no
+app.get('/api/employee', (req,res) => {
+  console.log('hiiiiii')
+  connection.query('select * from employees where emp_no =' + req.query.emp_no, function(err,result,fields) {
+    if (err) throw err;
+    console.log(result, result);
+    res.send({result: result})
+  })
+});
+
 app.get('*', function (request, response) {
   response.sendFile(path.resolve(__dirname, 'public/index.html'));
 });
