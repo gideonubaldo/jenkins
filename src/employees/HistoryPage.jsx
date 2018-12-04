@@ -9,7 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,7 @@ const styles = theme => ({
     height: "47px",
     color: "#ffffff",
     width: "100%",
-    minWidth: "30px",
+    minWidth: "30px"
   }
 });
 

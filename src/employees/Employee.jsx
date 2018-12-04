@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { Link } from "react-router-dom";
 
 const styles = {
   root: {
@@ -30,6 +31,14 @@ const styles = {
     width: "100%",
     minWidth: "30px",
     marginTop: 20
+  },
+  salaryButton: {
+    backgroundColor: "primary",
+    height: "47px",
+    color: "#ffffff",
+    width: "100%",
+    minWidth: "30px",
+    marginTop: 10
   },
   avatar: {
     margin: 10,
@@ -397,6 +406,16 @@ class Employee extends Component {
                     onChange
                   >
                     Save
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.salaryButton}
+                    onChange
+                    component={Link}
+                    to="/history"
+                  >
+                    Salary History
                   </Button>
                 </Grid>
               </Paper>
