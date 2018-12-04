@@ -85,6 +85,7 @@ class Employee extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: "",
       firstName: "",
       lastName: "",
       city: "",
@@ -107,107 +108,41 @@ class Employee extends Component {
     this.setState({ [prop]: event.target.value });
   };
 
-  render() {
-    const positions = [
-      {
-        value: "Accountant",
-        label: "Accountant"
-      },
-      {
-        value: "Janitor",
-        label: "Janitor"
-      },
-      {
-        value: "Manager",
-        label: "Manager"
-      },
-      {
-        value: "Lead",
-        label: "Lead"
-      },
-      {
-        value: "Intern",
-        label: "Intern"
-      },
-      {
-        value: "Supervisor",
-        label: "Supervisor"
-      }
-    ];
+  renderUserProfile() {
 
-    const { classes } = this.props;
-    return (
-      <Grid
-        container
-        className={classes.root}
-        spacing={8}
-        direction="column"
-        justify="flex-start"
-        alignItems="center"
-      >
-        <Grid item>
-          <Grid container>
-            <Grid item>
-              <Paper>
-                <Grid
-                  className={classes.searchcontainer}
-                  spacing={8}
-                  direction="column"
-                >
-                  <Grid item>
-                    <Grid
-                      container
-                      className={classes.searchInput}
-                      direction="row"
-                    >
-                      <Grid item xs={5}>
-                        <Grid container>
-                          <TextField
-                            variant="outlined"
-                            label="First Name"
-                            fullWidth
-                            style={{
-                              paddingRight: 10
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={5}>
-                        <Grid container>
-                          <TextField
-                            variant="outlined"
-                            label="Last Name"
-                            fullWidth
-                            style={{
-                              paddingRight: 10
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid
-                        item
-                        xs={2}
-                        className={classes.searchButtonContainer}
-                      >
-                        <Button
-                          variant="contained"
-                          className={classes.searchButton}
-                          color="primary"
-                        >
-                          Search
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
+    if (this.state.search != "") {
+      const positions = [
+        {
+          value: "Accountant",
+          label: "Accountant"
+        },
+        {
+          value: "Janitor",
+          label: "Janitor"
+        },
+        {
+          value: "Manager",
+          label: "Manager"
+        },
+        {
+          value: "Lead",
+          label: "Lead"
+        },
+        {
+          value: "Intern",
+          label: "Intern"
+        },
+        {
+          value: "Supervisor",
+          label: "Supervisor"
+        }
+      ];
+      const { classes } = this.props;
+      return (
         <Grid item>
           <Grid container className={classes.infocontainer} spacing={16}>
             {/* This 4 block is for the left part with employee
-                profile picture and description */}
+            profile picture and description */}
             <Grid item xs={4}>
               <Paper container className={classes.paper}>
                 <Grid
@@ -231,7 +166,7 @@ class Employee extends Component {
               </Paper>
             </Grid>
             {/* This 8 block is for the right part wth employee 
-                information and settings */}
+            information and settings */}
             <Grid item xs={8}>
               <Paper className={classes.paper}>
                 <Grid container>
@@ -247,7 +182,7 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                       <Typography className={classes.label}>
+                      <Typography className={classes.label}>
                         First Name
                       </Typography>
                       <TextField
@@ -267,8 +202,8 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                       <Typography className={classes.label}>
-                       Last Name
+                      <Typography className={classes.label}>
+                        Last Name
                       </Typography>
                       <TextField
                         disabled
@@ -308,7 +243,7 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                     <Typography className={classes.label}>
+                      <Typography className={classes.label}>
                         Birth Date
                       </Typography>
                       <TextField
@@ -328,7 +263,7 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                     <Typography className={classes.label}>
+                      <Typography className={classes.label}>
                         Gender
                       </Typography>
                       <TextField
@@ -348,7 +283,7 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     > <Typography className={classes.label}>
-                    Hired Date
+                        Hired Date
                   </Typography>
                       <TextField
                         disabled
@@ -367,7 +302,7 @@ class Employee extends Component {
                     }}
                   >
                     Employee Settings
-                  </Typography>
+              </Typography>
                   <Divider className={classes.divider} />
                   <Grid container direction="row">
                     <Grid
@@ -433,11 +368,105 @@ class Employee extends Component {
                   >
                     Salary History
                   </Button>
+
                 </Grid>
               </Paper>
             </Grid>
           </Grid>
         </Grid>
+      );
+    }
+  }
+
+  render() {
+    const positions = [
+      {
+        value: "Accountant",
+        label: "Accountant"
+      },
+      {
+        value: "Janitor",
+        label: "Janitor"
+      },
+      {
+        value: "Manager",
+        label: "Manager"
+      },
+      {
+        value: "Lead",
+        label: "Lead"
+      },
+      {
+        value: "Intern",
+        label: "Intern"
+      },
+      {
+        value: "Supervisor",
+        label: "Supervisor"
+      }
+    ];
+
+    const { classes } = this.props;
+    return (
+      <Grid
+        container
+        className={classes.root}
+        spacing={8}
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        <Grid item>
+          <Grid container>
+            <Grid item>
+              <Paper>
+                <Grid
+                  className={classes.searchcontainer}
+                  spacing={8}
+                  direction="column"
+                >
+                  <Grid item>
+                    <Grid
+                      container
+                      className={classes.searchInput}
+                      direction="row"
+                    >
+
+                      <Grid item xs={9}>
+                        <Grid container>
+                          <TextField
+                            variant="outlined"
+                            onChange={text => this.setState({ search: text })}
+                            label="Employee Id"
+                            fullWidth
+                            style={{
+                              paddingRight: 10
+                            }}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={2}
+                        className={classes.searchButtonContainer}
+                      >
+                        <Button
+                          variant="contained"
+                          className={classes.searchButton}
+                          color="primary"
+                          onClick={this.getEmployee()}
+                        >
+                          Search
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+        {this.renderUserProfile()}
       </Grid>
     );
   }
