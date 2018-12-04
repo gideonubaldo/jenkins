@@ -69,6 +69,7 @@ app.get('/api/update', (req, res) => {
   var sql = SqlString.format('update employees set birth_date = ?,first_name = ?,last_name = ?,gender = ?,hire_date = ? where emp_no = ?',
     [req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date, req.query.emp_no])
   console.log(sql)
+  console.log("just updated employee with employee number 10001");
   connection.query(sql,
     req, function (err, result, fields) {
       if (err) throw err

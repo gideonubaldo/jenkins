@@ -56,6 +56,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+        
         <Security
           issuer={config.issuer}
           client_id={config.client_id}
@@ -63,7 +64,9 @@ class App extends Component {
           onAuthRequired={this.onAuthRequired}
         >
           <Navbar />
+          
           <Switch>
+            <Route exact path="/twitter" component={() => window.location = 'http://twitter.com'} />
             <Route exact path="/" component={HomePage} />
           </Switch>
           <Route

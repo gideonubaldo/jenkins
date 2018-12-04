@@ -4,6 +4,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -21,7 +23,20 @@ const styles = {
 };
 
 class NavBar extends Component {
+  state = {
+    openMenu: null,
+  };
+
+  handleClick = event => {
+    this.setState({ openMenu: event.currentTarget });
+  }
+
+  handleClose = () => {
+    this.setState({ openMenu: null });
+  };
+
   render() {
+    const { openMenu } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -31,9 +46,20 @@ class NavBar extends Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
+              onClick={this.handleClick}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> 
+            <Menu
+              id="simple-menu"
+              openMenu={openMenu}
+              open={Boolean(openMenu)}
+              onClose={this.handleClose}
+            >
+              <MenuItem><a href="twitter">Twitter</a></MenuItem>
+              <MenuItem onClick={this.handleClose}><a href="twitter.com">Twitter</a></MenuItem>
+              <MenuItem onClick={this.handleClose}><a href="twitter.com">Twitter</a></MenuItem>
+            </Menu>
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Tabs
             </Typography>
