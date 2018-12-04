@@ -40,13 +40,9 @@ const styles = {
     fontWeight: "bold",
     fontSize: 20
   },
-  margin: {
-    margin: 10
+  positiontextField: {
+    flexBasis: "100%"
   },
-  textField: {
-    flexBasis: 200
-  },
-  searchInput: {},
   searchcontainer: {
     marginTop: 100,
     marginBottom: 100,
@@ -413,7 +409,7 @@ class Employee extends Component {
                     Employee Settings
                   </Typography>
                   <Divider className={classes.divider} />
-                  <Grid container direction="column">
+                  <Grid container direction="row">
                     <Grid
                       container
                       xs={6}
@@ -439,7 +435,7 @@ class Employee extends Component {
                     >
                       <TextField
                         select
-                        className={(classes.margin, classes.textField)}
+                        className={classes.positiontextField}
                         variant="outlined"
                         label="Position"
                         value={this.state.position}
