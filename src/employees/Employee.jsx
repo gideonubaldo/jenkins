@@ -11,21 +11,22 @@ import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const styles = {
   root: {
     flexGrow: 1,
-    padding: "15px"
+    padding: 15
   },
   paper: {
     padding: 30
   },
   divider: {
     width: "100%",
-    marginTop: "10px"
+    marginTop: 10
   },
   button: {
-    marginTop: 10
+    marginTop: 20
   },
   avatar: {
     margin: 10,
@@ -34,7 +35,13 @@ const styles = {
   },
   Headings: {
     fontWeight: "bold",
-    fontSize: "20px"
+    fontSize: 20
+  },
+  margin: {
+    margin: 10
+  },
+  textField: {
+    flexBasis: 200
   }
 };
 
@@ -53,16 +60,47 @@ class Employee extends Component {
       phone: "",
       website: "",
       salary: "",
-      position: "Accountant"
+      position: ""
     };
   }
 
   _changePosition = e => {
-      this.setState({
-          position: e.target.value
-      })
-  }
+    this.setState({
+      position: e.target.value
+    });
+  };
+  _handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
   render() {
+    const positions = [
+      {
+        value: "accountant",
+        label: "accountant"
+      },
+      {
+        value: "janitor",
+        label: "janitor"
+      },
+      {
+        value: "manager",
+        label: "manager"
+      },
+      {
+        value: "lead",
+        label: "lead"
+      },
+      {
+        value: "intern",
+        label: "intern"
+      },
+      {
+        value: "Supervisor",
+        label: "Supervisor"
+      }
+    ];
+
     const { classes } = this.props;
     return (
       <Grid container className={classes.root} spacing={16}>
@@ -117,6 +155,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="First Name"
                     fullWidth
                     style={{
@@ -131,7 +170,7 @@ class Employee extends Component {
                     paddingTop: 20
                   }}
                 >
-                  <TextField label="Last Name" fullWidth />
+                  <TextField variant="outlined" label="Last Name" fullWidth />
                 </Grid>
               </Grid>
 
@@ -144,6 +183,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="Address Line 1"
                     fullWidth
                     style={{
@@ -158,7 +198,11 @@ class Employee extends Component {
                     paddingTop: 20
                   }}
                 >
-                  <TextField label="Address Line 2" fullWidth />
+                  <TextField
+                    variant="outlined"
+                    label="Address Line 2"
+                    fullWidth
+                  />
                 </Grid>
               </Grid>
 
@@ -171,6 +215,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="City"
                     fullWidth
                     style={{
@@ -186,6 +231,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="State/Province"
                     fullWidth
                     style={{
@@ -201,7 +247,7 @@ class Employee extends Component {
                     paddingTop: 20
                   }}
                 >
-                  <TextField label="Zipcode" fullWidth />
+                  <TextField variant="outlined" label="Zipcode" fullWidth />
                 </Grid>
               </Grid>
 
@@ -214,6 +260,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="E-mail"
                     fullWidth
                     style={{
@@ -222,13 +269,14 @@ class Employee extends Component {
                   />
                 </Grid>
                 <Grid
+                  variant="outlined"
                   container
                   xs={6}
                   style={{
                     paddingTop: 20
                   }}
                 >
-                  <TextField label="Country" fullWidth />
+                  <TextField variant="outlined" label="Country" fullWidth />
                 </Grid>
               </Grid>
 
@@ -241,6 +289,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="Phone"
                     fullWidth
                     style={{
@@ -255,7 +304,7 @@ class Employee extends Component {
                     paddingTop: 20
                   }}
                 >
-                  <TextField label="Website" fullWidth />
+                  <TextField variant="outlined" label="Website" fullWidth />
                 </Grid>
               </Grid>
 
@@ -278,6 +327,7 @@ class Employee extends Component {
                   }}
                 >
                   <TextField
+                    variant="outlined"
                     label="Salary"
                     fullWidth
                     style={{
@@ -289,21 +339,28 @@ class Employee extends Component {
                   container
                   xs={6}
                   style={{
-                    paddingTop: 30
+                    paddingTop: 20
                   }}
                 >
-                  <FormControl>
-                    <Select
-                      value={this.state.position}
-                      name="position"
-                      fullWidth
-                    >
-                      <MenuItem value={"Accountant"}>Accountant</MenuItem>
-                      <MenuItem value={"Manager"}>Manager</MenuItem>
-                      <MenuItem value={"Tech-Lead"}>Tech-Lead</MenuItem>
-                      <MenuItem value={"President"}>President</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    select
+                    className={(classes.margin, classes.textField)}
+                    variant="outlined"
+                    label="Position"
+                    value={this.state.position}
+                    onChange={this._handleChange('position')}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">:</InputAdornment>
+                      )
+                    }}
+                  >
+                    {positions.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
               </Grid>
 

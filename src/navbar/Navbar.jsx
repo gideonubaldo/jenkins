@@ -64,13 +64,13 @@ export default withStyles(styles)(
         if (this.state.authenticated === null) return null;
         const logInOut = this.state.authenticated ? (
           <div>
-            <Button color="primary" variant="contained" onClick={this.logout}>
+            <Button color="inherit" onClick={this.logout}>
               Logout
             </Button>
           </div>
         ) : (
           <div>
-            <Button color="primary" variant="contained" onClick={this.login}>
+            <Button color="inherit" onClick={this.login}>
               Login
             </Button>
           </div>
