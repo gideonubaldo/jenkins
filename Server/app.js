@@ -19,16 +19,16 @@ app.use(express.static(path.join(__dirname, 'public')))
  // .set('views', path.join(__dirname, 'views'))
  // .set('view engine', 'ejs')
 //  .get('/', (req, res) => res.render('pages/index'))
-
+//
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
+app.enable('trust proxy');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/api/get30Rows', (req, res) => {
 
@@ -85,6 +85,10 @@ app.get('/api/delete', (req, res) => {
     console.log('Deleted', result);
     res.send({ result: result });
   })
+});
+
+app.get('*', function (request, response) {
+  response.sendFile(path.resolve(__dirname, 'public/index.html'));
 });
 
 app.use(function (err, req, res, next) {
