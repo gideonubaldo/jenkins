@@ -70,8 +70,6 @@ class Employee extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      addressline1: "",
-      addressline2: "",
       city: "",
       stateProvince: "",
       email: "",
@@ -242,6 +240,7 @@ class Employee extends Component {
                       }}
                     >
                       <TextField
+                        disabled
                         variant="outlined"
                         label="First Name"
                         fullWidth
@@ -258,6 +257,7 @@ class Employee extends Component {
                       }}
                     >
                       <TextField
+                        disabled
                         variant="outlined"
                         label="Last Name"
                         fullWidth
@@ -274,85 +274,9 @@ class Employee extends Component {
                       }}
                     >
                       <TextField
+                        disabled
                         variant="outlined"
-                        label="Address Line 1"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        variant="outlined"
-                        label="Address Line 2"
-                        fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container>
-                    <Grid
-                      container
-                      xs={4}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        variant="outlined"
-                        label="City"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      xs={4}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        variant="outlined"
-                        label="State/Province"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-
-                    <Grid
-                      container
-                      xs={4}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField variant="outlined" label="Zipcode" fullWidth />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        variant="outlined"
-                        label="E-mail"
+                        label="Employee Number"
                         fullWidth
                         style={{
                           paddingRight: 10
@@ -367,7 +291,12 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                      <TextField variant="outlined" label="Country" fullWidth />
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label="Birth Date"
+                        fullWidth
+                      />
                     </Grid>
                   </Grid>
 
@@ -380,8 +309,9 @@ class Employee extends Component {
                       }}
                     >
                       <TextField
+                        disabled
                         variant="outlined"
-                        label="Phone"
+                        label="Gender"
                         fullWidth
                         style={{
                           paddingRight: 10
@@ -395,7 +325,12 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                      <TextField variant="outlined" label="Website" fullWidth />
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label="Hired Date"
+                        fullWidth
+                      />
                     </Grid>
                   </Grid>
 

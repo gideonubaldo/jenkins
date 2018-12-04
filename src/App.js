@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Security, ImplicitCallback } from "@okta/okta-react";
 import Navbar from "./navbar/Navbar";
 import HomePage from "./home/HomePage";
+import HistoryPage from "./employees/HistoryPage";
 import WebPortal from "./webportal/WebPortal";
 import Login from "./auth/Login";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
@@ -20,12 +21,11 @@ class App extends Component {
   //   post: '',
   //   responseToPost: '',
   // };
-  
+
   // componentDidMount() {
   //   this.callApi()
   //     .then(res => this.setState({ response: res.express }))
   //     .catch(err => console.log(err));
-
 
   // }
 
@@ -89,6 +89,7 @@ class App extends Component {
                       component={ImplicitCallback}
                     />
                     <Route path="/portal" component={WebPortal} />
+                    <Route exact path="/history" component={HistoryPage} />
                   </Switch>
                 </div>
               )}
