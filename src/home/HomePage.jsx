@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import { withAuth } from '@okta/okta-react';
 import Employee from '../employees/Employee';
 
@@ -32,30 +32,26 @@ export default withAuth(
 
     render() {
       if (this.state.authenticated === null) return null;
-
-    //this is ternary: the first wrapper procts when it is true, the lattwer part if it is false
       const mainContent = this.state.authenticated ? (
         <div>
-          <button className="btn btn-light btn-lg" onClick={this.logout}>
+          <Button color="primary" variant="contained" onClick={this.logout}>
             Logout
-          </button>
+          </Button>
         </div>
       ) : (
         <div>
           <p className="lead">
-            If you are a staff member, please get your credentials from your
-            supervisor
+            Click Here to Log In
           </p>
-          <button className="btn btn-dark btn-lg" onClick={this.login}>
+          <Button color="primary" variant="contained"  onClick={this.login}>
             Login
-          </button>
+          </Button>
         </div>
       );
 
       return (
         <div className="jumbotron">
           <Employee/>
-          {mainContent}
         </div>
       );
     }
