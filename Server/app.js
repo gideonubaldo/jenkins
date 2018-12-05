@@ -52,13 +52,21 @@ app.get('/api/getTotalCount', (req, res) => {
 app.get('/api/create', (req, res) => {
 
   var sql = SqlString.format('insert into employees set emp_no = ?,birth_date = ?,first_name = ?,last_name = ?,gender = ?,hire_date = ?'
-    , [req.query.emp_no, req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date])
-
+    , [req.query.emp_no, req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date]) 
   console.log(sql)
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err;
+    console.log('Created new Employee', result);
+    res.send({ result: result });
+  })
+});
+
+app.get('/api/newsalary', (req, res) => {
+  var sql = SqlString.format('update salaries set salary = ?, from_date = ?, to_date = ? where emp_no = ?', [req.query.salary, req.query.from_date, req.query.to_date,req.query.emp_no]) 
 
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
-    console.log('Created', result);
+    console.log('Created new salary for Employee', result);
     res.send({ result: result });
   })
 });
@@ -89,8 +97,8 @@ app.get('/api/delete', (req, res) => {
 
 // search by emp_no
 app.get('/api/employee', (req,res) => {
-  console.log('hiiiiii')
-  connection.query('select * from employees where emp_no =' + req.query.emp_no, function(err,result,fields) {
+  var sql = SqlString.format('select * from employees join salaries using(emp_no) where emp_no = ? ORDER BY from_date DESC LIMIT 1',[req.query.emp_no])
+  connection.query(sql, function(err,result,fields) {
     if (err) throw err;
     console.log(result, result);
     res.send({result: result})
