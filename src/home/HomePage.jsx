@@ -53,7 +53,7 @@ class Home extends Component {
 
     const isAuthenticated = this.state.authenticated ? (
       <div>
-        <Employee/>
+        <Employee id={this.props.id}/>
       </div>
     ) : (
       <div>
