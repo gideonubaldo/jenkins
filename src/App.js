@@ -108,6 +108,10 @@ class App extends Component {
                       const id = props.match.params.id
                       return <HistoryPage id={id} />
                     }} />
+                    <Route exact path="/:id(\d+)" render={(props) => {
+                      const id = props.match.params.id
+                      return <HomePage id={id} />
+                    }} />
                   </Switch>
                 </div>
               )}

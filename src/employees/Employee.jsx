@@ -16,10 +16,10 @@ class Employee extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
+      search: this.props.id || "",
       first_name: "",
       last_name: "",
-      emp_no: "",
+      emp_no:this.props.id || "",
       birth_date: "",
       gender: "",
       hire_date: "",
@@ -28,6 +28,10 @@ class Employee extends Component {
       from_date: "",
       to_date: "",
     };
+
+    if(this.state.emp_no !== ""){
+      this.getEmployee()
+    }
   }
 
   _changePosition = e => {
@@ -339,6 +343,7 @@ class Employee extends Component {
                         <TextField
                           variant="outlined"
                           onChange={text => this.setState({ search: text.target.value })}
+                          defaultValue={this.state.emp_no}
                           label="Employee Id"
                           fullWidth
                           style={{

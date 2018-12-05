@@ -128,7 +128,7 @@ export class HistoryPage extends Component {
                 color="primary"
                 className={classes.goBack}
                 component={Link}
-                to="/"
+                to={"/" + this.props.id}
               >
                 Go Back to Home
               </Button>
