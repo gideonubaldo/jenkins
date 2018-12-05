@@ -53,9 +53,13 @@ const styles = {
     fontSize: 20,
     fontFamily: "typeface-roboto"
   },
-  positiontextField: {
-    flexBasis: "100%"
+  margin: {
+    margin: 10
   },
+  textField: {
+    flexBasis: 200
+  },
+  searchInput: {},
   searchcontainer: {
     marginTop: 100,
     marginBottom: 100,
@@ -107,6 +111,19 @@ class Employee extends Component {
   _handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
   };
+
+    getEmployee= async() => {
+    const id = {
+      emp_no: 10001
+    }
+    const url = new URL('http://localhost:3000/api/employee')
+    url.search = new URLSearchParams(id)
+    const response = fetch(url);
+    const body =  response
+    console.log(body)
+    
+
+  }
 
   renderUserProfile() {
 
@@ -304,7 +321,7 @@ class Employee extends Component {
                     Employee Settings
               </Typography>
                   <Divider className={classes.divider} />
-                  <Grid container direction="row">
+                  <Grid container direction="column">
                     <Grid
                       container
                       xs={6}
@@ -330,7 +347,7 @@ class Employee extends Component {
                     >
                       <TextField
                         select
-                        className={classes.positiontextField}
+                        className={(classes.margin, classes.textField)}
                         variant="outlined"
                         label="Position"
                         value={this.state.position}
@@ -454,7 +471,7 @@ class Employee extends Component {
                           variant="contained"
                           className={classes.searchButton}
                           color="primary"
-                          onClick={this.getEmployee()}
+                          onClick={() => {this.getEmployee()} }
                         >
                           Search
                         </Button>
