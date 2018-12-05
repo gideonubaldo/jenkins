@@ -17,40 +17,40 @@ const config = {
 
 class App extends Component {
 
-  state = {
-    response: '',
-    post: '',
-    responseToPost: '',
-  };
-  
-  componentDidMount() {
-    this.callApi()
-      .then(res => this.setState({ response: res.express }))
-      .catch(err => console.log(err));
-  }
+  // state = {
+  //   response: '',
+  //   post: '',
+  //   responseToPost: '',
+  // };
 
-  callApi = async () => {
+  // componentDidMount() {
+  //   this.callApi()
+  //     .then(res => this.setState({ response: res.express }))
+  //     .catch(err => console.log(err));
+  // }
 
-    const employee = {
-      emp_no: '10002',
-      // birth_date: '1953-09-02',
-      // first_name: 'Georgi',
-      // last_name: 'Facello',
-      // gender: 'M',
-      // hire_date: '1986-06-26',
-      // salary: 10000,
-      // from_date: '2018-6-22',
-      // to_date: '2019-1-1'
-    }
+  // callApi = async () => {
 
-    const url = new URL('http://localhost:3000/api/employee')
-    url.search = new URLSearchParams(employee)
-    const response = await fetch(url);
-    const body = await response.json();
-    console.log(body)
-    if (response.status !== 200) throw Error(body.message);
-    return body;
-  };
+  //   const employee = {
+  //     emp_no: '10002',
+  //     // birth_date: '1953-09-02',
+  //     // first_name: 'Georgi',
+  //     // last_name: 'Facello',
+  //     // gender: 'M',
+  //     // hire_date: '1986-06-26',
+  //     // salary: 10000,
+  //     // from_date: '2018-6-22',
+  //     // to_date: '2019-1-1'
+  //   }
+
+  //   const url = new URL('http://localhost:3000/api/employee')
+  //   url.search = new URLSearchParams(employee)
+  //   const response = await fetch(url);
+  //   const body = await response.json();
+  //   console.log(body)
+  //   if (response.status !== 200) throw Error(body.message);
+  //   return body;
+  // };
 
   // callApi = async () => {
 
@@ -104,7 +104,10 @@ class App extends Component {
                       component={ImplicitCallback}
                     />
                     <Route path="/portal" component={WebPortal} />
-                    <Route exact path="/history" component={HistoryPage} />
+                    <Route exact path="/history/:id(\d+)" render={(props) => {
+                      const id = props.match.params.id
+                      return <HistoryPage id={id} />
+                    }} />
                   </Switch>
                 </div>
               )}

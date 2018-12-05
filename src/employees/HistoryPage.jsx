@@ -43,18 +43,49 @@ const CustomTableCell = withStyles(theme => ({
   }
 }))(TableCell);
 
-let id = 0;
-function createData(name, fromdate, todate) {
-  id += 1;
-  return { id, name, fromdate, todate };
-}
-
-const rows = [
-  createData("60117", "1986-06-26", "1987-06-26"),
-  createData("123123", "1982-06-26", "1984-06-26")
-];
-
 export class HistoryPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: []
+    };
+  }
+
+  componentDidMount() {
+    this.getTable()
+  }
+
+  getTable = async () => {
+    const id = {
+      emp_no: this.props.id
+    }
+    const url = new URL('http://localhost:3000/api/employeeTable')
+    url.search = new URLSearchParams(id)
+    const response = await fetch(url)
+    const rows = await response.json()
+    this.setState({ rows: rows.result })
+
+  }
+
+  renderTable() {
+    if (this.state.rows !== []) {
+      console.log(this.state.rows)
+      const { classes } = this.props;
+      return this.state.rows.map(row => {
+        return (
+          <TableRow className={classes.row} key={row.emp_no}>
+            <CustomTableCell component="th" scope="row">
+              {row.salary}
+            </CustomTableCell>
+            <CustomTableCell>{row.from_date.substring(0, 10)}</CustomTableCell>
+            <CustomTableCell>{row.to_date.substring(0, 10)}</CustomTableCell>
+          </TableRow>
+        );
+      })
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -86,17 +117,7 @@ export class HistoryPage extends Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map(row => {
-                      return (
-                        <TableRow className={classes.row} key={row.id}>
-                          <CustomTableCell component="th" scope="row">
-                            {row.name}
-                          </CustomTableCell>
-                          <CustomTableCell>{row.fromdate}</CustomTableCell>
-                          <CustomTableCell>{row.todate}</CustomTableCell>
-                        </TableRow>
-                      );
-                    })}
+                    {this.renderTable()}
                   </TableBody>
                 </Table>
               </Grid>
