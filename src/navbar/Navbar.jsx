@@ -70,9 +70,7 @@ export default withStyles(styles)(
           </div>
         ) : (
           <div>
-            <Button color="inherit" onClick={this.login}>
-              Login
-            </Button>
+             
           </div>
         );
         const { openMenu } = this.state;
