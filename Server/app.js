@@ -16,8 +16,8 @@ connection.connect(function (err) {
 })
 
 app.use(express.static(path.join(__dirname, 'public')))
- // .set('views', path.join(__dirname, 'views'))
- // .set('view engine', 'ejs')
+// .set('views', path.join(__dirname, 'views'))
+// .set('view engine', 'ejs')
 //  .get('/', (req, res) => res.render('pages/index'))
 //
 // view engine setup
@@ -28,16 +28,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-
-app.get('/api/get30Rows', (req, res) => {
-
-  connection.query('select * from employees limit 30', function (err, rows, fields) {
-    if (err) throw err
-    console.log('The solution is: ', rows)
-    res.send({ rows: rows });
-  })
-});
 
 app.get('/api/getTotalCount', (req, res) => {
 
@@ -52,7 +42,7 @@ app.get('/api/getTotalCount', (req, res) => {
 app.get('/api/create', (req, res) => {
 
   var sql = SqlString.format('insert into employees set emp_no = ?,birth_date = ?,first_name = ?,last_name = ?,gender = ?,hire_date = ?'
-    , [req.query.emp_no, req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date]) 
+    , [req.query.emp_no, req.query.birth_date, req.query.first_name, req.query.last_name, req.query.gender, req.query.hire_date])
   console.log(sql)
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
@@ -62,7 +52,7 @@ app.get('/api/create', (req, res) => {
 });
 
 app.get('/api/newsalary', (req, res) => {
-  var sql = SqlString.format('update salaries set salary = ?, from_date = ?, to_date = ? where emp_no = ?', [req.query.salary, req.query.from_date, req.query.to_date,req.query.emp_no]) 
+  var sql = SqlString.format('update salaries set salary = ? where emp_no = ? and from_date = ?', [req.query.salary, req.query.emp_no, req.query.from_date])
 
   connection.query(sql, function (err, result, fields) {
     if (err) throw err;
@@ -96,12 +86,22 @@ app.get('/api/delete', (req, res) => {
 });
 
 // search by emp_no
-app.get('/api/employee', (req,res) => {
-  var sql = SqlString.format('select * from employees join salaries using(emp_no) where emp_no = ? ORDER BY from_date DESC LIMIT 1',[req.query.emp_no])
-  connection.query(sql, function(err,result,fields) {
+app.get('/api/employee', (req, res) => {
+  var sql = SqlString.format('select * from employees join salaries using(emp_no) where emp_no = ? ORDER BY from_date DESC LIMIT 1', [req.query.emp_no])
+  connection.query(sql, function (err, result, fields) {
     if (err) throw err;
     console.log(result, result);
-    res.send({result: result})
+    res.send({ result: result })
+  })
+});
+
+// search by emp_no
+app.get('/api/employeeTable', (req, res) => {
+  var sql = SqlString.format('select * from employees join salaries using(emp_no) where emp_no = ? ORDER BY from_date DESC', [req.query.emp_no])
+  connection.query(sql, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result, result);
+    res.send({ result: result })
   })
 });
 
