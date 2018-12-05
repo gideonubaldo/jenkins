@@ -49,7 +49,10 @@ function createData(name, fromdate, todate) {
   return { id, name, fromdate, todate };
 }
 
-const rows = [createData("60117", "1986-06-26", "1987-06-26")];
+const rows = [
+  createData("60117", "1986-06-26", "1987-06-26"),
+  createData("123123", "1982-06-26", "1984-06-26")
+];
 
 export class HistoryPage extends Component {
   render() {

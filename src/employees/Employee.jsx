@@ -32,6 +32,9 @@ const styles = {
     minWidth: "30px",
     marginTop: 20
   },
+  profileTitle: {
+    fontFamily: "typeface-roboto"
+  },
   salaryButton: {
     backgroundColor: "primary",
     height: "47px",
@@ -47,7 +50,8 @@ const styles = {
   },
   Headings: {
     fontWeight: "bold",
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: "typeface-roboto"
   },
   positiontextField: {
     flexBasis: "100%"
@@ -70,6 +74,10 @@ const styles = {
   searchButtonContainer: {
     flexWrap: "wrap",
     display: "flex"
+  },
+  label: {
+    fontSize: 16,
+    fontFamily: "typeface-roboto"
   }
 };
 
@@ -213,16 +221,10 @@ class Employee extends Component {
                     src="blank-profile.png"
                     className={classes.avatar}
                   />
-                  <Typography
-                    variant="typeface-roboto"
-                    className={classes.Headings}
-                  >
-                    John Doe{/* insert dynamic name here */}
+                  <Typography className={classes.Headings}>
+                    Georgi Facello{/* insert dynamic name here */}
                   </Typography>
-                  <Typography
-                    variant="typeface-roboto"
-                    className={classes.profileTitle}
-                  >
+                  <Typography className={classes.profileTitle}>
                     Head Cheer Leader{/* insert dynamic position here */}
                   </Typography>
                 </Grid>
@@ -233,10 +235,7 @@ class Employee extends Component {
             <Grid item xs={8}>
               <Paper className={classes.paper}>
                 <Grid container>
-                  <Typography
-                    variant="typeface-roboto"
-                    className={classes.Headings}
-                  >
+                  <Typography className={classes.Headings}>
                     Personal Settings{/* insert dynamic name here */}
                   </Typography>
                   <Divider className={classes.divider} />
@@ -248,10 +247,13 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
+                       <Typography className={classes.label}>
+                        First Name
+                      </Typography>
                       <TextField
                         disabled
                         variant="outlined"
-                        label="First Name"
+                        label="Georgi"
                         fullWidth
                         style={{
                           paddingRight: 10
@@ -265,10 +267,13 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
+                       <Typography className={classes.label}>
+                       Last Name
+                      </Typography>
                       <TextField
                         disabled
                         variant="outlined"
-                        label="Last Name"
+                        label="Facello"
                         fullWidth
                       />
                     </Grid>
@@ -282,10 +287,13 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
+                      <Typography className={classes.label}>
+                        Employee number
+                      </Typography>
                       <TextField
                         disabled
                         variant="outlined"
-                        label="Employee Number"
+                        label="10001"
                         fullWidth
                         style={{
                           paddingRight: 10
@@ -300,10 +308,13 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
+                     <Typography className={classes.label}>
+                        Birth Date
+                      </Typography>
                       <TextField
                         disabled
                         variant="outlined"
-                        label="Birth Date"
+                        label="1953-09-02"
                         fullWidth
                       />
                     </Grid>
@@ -317,10 +328,13 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
+                     <Typography className={classes.label}>
+                        Gender
+                      </Typography>
                       <TextField
                         disabled
                         variant="outlined"
-                        label="Gender"
+                        label="M"
                         fullWidth
                         style={{
                           paddingRight: 10
@@ -333,21 +347,23 @@ class Employee extends Component {
                       style={{
                         paddingTop: 20
                       }}
-                    >
+                    > <Typography className={classes.label}>
+                    Hired Date
+                  </Typography>
                       <TextField
                         disabled
                         variant="outlined"
-                        label="Hired Date"
+                        label="1986-06-26"
                         fullWidth
                       />
                     </Grid>
                   </Grid>
 
                   <Typography
-                    variant="typeface-roboto"
                     className={classes.Headings}
                     style={{
-                      marginTop: 20
+                      marginTop: 20,
+                      fontFamily: "typeface-roboto"
                     }}
                   >
                     Employee Settings
