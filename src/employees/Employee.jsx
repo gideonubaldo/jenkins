@@ -12,6 +12,383 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Link } from "react-router-dom";
 
+class Employee extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: "",
+      first_name: "",
+      last_name: "",
+      emp_no: "",
+      birth_date: "",
+      gender: "",
+      hire_date: "",
+      salary: "",
+      position: "",
+      from_date: "",
+      to_date: "",
+    };
+  }
+
+  _changePosition = e => {
+    this.setState({
+      position: e.target.value
+    });
+  };
+  _handleChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  getEmployee = async () => {
+    const id = {
+      emp_no: this.state.search
+    }
+    const url = new URL('http://localhost:3000/api/employee')
+    url.search = new URLSearchParams(id)
+    const response = await fetch(url);
+    const body = await response.json()
+
+    this.setState({
+      emp_no: body.result[0].emp_no,
+      first_name: body.result[0].first_name,
+      last_name: body.result[0].last_name,
+      birth_date: body.result[0].birth_date.substring(0, 10),
+      hire_date: body.result[0].hire_date.substring(0, 10),
+      gender: body.result[0].gender,
+      salary: body.result[0].salary,
+      from_date: body.result[0].from_date.substring(0, 10),
+      to_date: body.result[0].to_date.substring(0, 10),
+    });
+  }
+  //update employee's salary
+  saveEmployee = async () => {
+
+    const salary = {
+      emp_no: this.state.emp_no,
+      salary: this.state.salary,
+      from_date: this.state.from_date,
+    }
+    const url = new URL('http://localhost:3000/api/newsalary')
+    url.search = new URLSearchParams(salary)
+    await fetch(url)
+  }
+
+  renderUserProfile() {
+
+    if (this.state.emp_no !== "") {
+      const { classes } = this.props;
+      return (
+        <Grid item>
+          <Grid container className={classes.infocontainer} spacing={16}>
+            {/* This 4 block is for the left part with employee
+            profile picture and description */}
+            <Grid item xs={4}>
+              <Paper container className={classes.paper}>
+                <Grid
+                  container
+                  justify="flex-start"
+                  direction="column"
+                  alignItems="center"
+                >
+                  <Avatar
+                    alt="Profile Picture"
+                    src="blank-profile.png"
+                    className={classes.avatar}
+                  />
+                  <Typography className={classes.Headings}>
+                    {this.state.first_name}  {this.state.last_name}
+                  </Typography>
+                </Grid>
+              </Paper>
+            </Grid>
+            {/* This 8 block is for the right part wth employee 
+            information and settings */}
+            <Grid item xs={8}>
+              <Paper className={classes.paper}>
+                <Grid container>
+                  <Typography className={classes.Headings}>
+                    Personal Settings{/* insert dynamic name here */}
+                  </Typography>
+                  <Divider className={classes.divider} />
+                  <Grid container>
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <Typography className={classes.label}>
+                        First Name
+                      </Typography>
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label={this.state.first_name}
+                        fullWidth
+                        style={{
+                          paddingRight: 10
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <Typography className={classes.label}>
+                        Last Name
+                      </Typography>
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label={this.state.last_name}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <Typography className={classes.label}>
+                        Employee number
+                      </Typography>
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label={this.state.emp_no}
+                        fullWidth
+                        style={{
+                          paddingRight: 10
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      variant="outlined"
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <Typography className={classes.label}>
+                        Birth Date
+                      </Typography>
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label={this.state.birth_date}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Grid container>
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <Typography className={classes.label}>
+                        Gender
+                      </Typography>
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label={this.state.gender}
+                        fullWidth
+                        style={{
+                          paddingRight: 10
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    > <Typography className={classes.label}>
+                        Hired Date
+                  </Typography>
+                      <TextField
+                        disabled
+                        variant="outlined"
+                        label={this.state.hire_date}
+                        fullWidth
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <Typography
+                    className={classes.Headings}
+                    style={{
+                      marginTop: 20,
+                      fontFamily: "typeface-roboto"
+                    }}
+                  >
+                    Employee Settings
+              </Typography>
+                  <Divider className={classes.divider} />
+                  <Grid container direction="column">
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <TextField
+                        variant="outlined"
+                        label="Salary"
+                        value={this.state.salary}
+                        onChange={text => this.setState({ salary: text.target.value })}
+                        fullWidth
+                        style={{
+                          paddingRight: 10
+                        }}
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      xs={6}
+                      style={{
+                        paddingTop: 20
+                      }}
+                    >
+                      <TextField
+                        select
+                        className={(classes.margin, classes.textField)}
+                        variant="outlined"
+                        label="Position"
+                        value={this.state.position}
+                        onChange={this._handleChange("position")}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">:</InputAdornment>
+                          )
+                        }}
+                      >
+                        {positions.map(option => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                  </Grid>
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.saveButton}
+                    onClick={() => { this.saveEmployee() }}
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.salaryButton}
+                    component={Link}
+                    to={"/history/"  + this.state.emp_no}
+                  >
+                    Salary History
+                  </Button>
+
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Grid>
+      );
+    }
+  }
+
+  renderSearchBar() {
+    const { classes } = this.props;
+    return (
+      <Grid item>
+        <Grid container>
+          <Grid item>
+            <Paper>
+              <Grid
+                className={classes.searchcontainer}
+                spacing={8}
+                direction="column"
+              >
+                <Grid item>
+                  <Grid
+                    container
+                    className={classes.searchInput}
+                    direction="row"
+                  >
+
+                    <Grid item xs={9}>
+                      <Grid container>
+                        <TextField
+                          variant="outlined"
+                          onChange={text => this.setState({ search: text.target.value })}
+                          label="Employee Id"
+                          fullWidth
+                          style={{
+                            paddingRight: 10
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={2}
+                      className={classes.searchButtonContainer}
+                    >
+                      <Button
+                        variant="contained"
+                        className={classes.searchButton}
+                        color="primary"
+                        onClick={() => { this.getEmployee() }}
+                      >
+                        Search
+                    </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Grid>)
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Grid
+        container
+        className={classes.root}
+        spacing={8}
+        direction="column"
+        justify="flex-start"
+        alignItems="center"
+      >
+        {this.renderSearchBar()}
+        {this.renderUserProfile()}
+      </Grid>
+    );
+  }
+}
+
+
 const styles = {
   root: {
     flexGrow: 1,
@@ -85,407 +462,32 @@ const styles = {
   }
 };
 
-class Employee extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: "",
-      firstName: "",
-      lastName: "",
-      city: "",
-      stateProvince: "",
-      email: "",
-      country: "",
-      phone: "",
-      website: "",
-      salary: "",
-      position: ""
-    };
+const positions = [
+  {
+    value: "Accountant",
+    label: "Accountant"
+  },
+  {
+    value: "Janitor",
+    label: "Janitor"
+  },
+  {
+    value: "Manager",
+    label: "Manager"
+  },
+  {
+    value: "Lead",
+    label: "Lead"
+  },
+  {
+    value: "Intern",
+    label: "Intern"
+  },
+  {
+    value: "Supervisor",
+    label: "Supervisor"
   }
+];
 
-  _changePosition = e => {
-    this.setState({
-      position: e.target.value
-    });
-  };
-  _handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-  };
 
-    getEmployee= async() => {
-    const id = {
-      emp_no: 10001
-    }
-    const url = new URL('http://localhost:3000/api/employee')
-    url.search = new URLSearchParams(id)
-    const response = fetch(url);
-    const body =  response
-    console.log(body)
-    
-
-  }
-
-  renderUserProfile() {
-
-    if (this.state.search != "") {
-      const positions = [
-        {
-          value: "Accountant",
-          label: "Accountant"
-        },
-        {
-          value: "Janitor",
-          label: "Janitor"
-        },
-        {
-          value: "Manager",
-          label: "Manager"
-        },
-        {
-          value: "Lead",
-          label: "Lead"
-        },
-        {
-          value: "Intern",
-          label: "Intern"
-        },
-        {
-          value: "Supervisor",
-          label: "Supervisor"
-        }
-      ];
-      const { classes } = this.props;
-      return (
-        <Grid item>
-          <Grid container className={classes.infocontainer} spacing={16}>
-            {/* This 4 block is for the left part with employee
-            profile picture and description */}
-            <Grid item xs={4}>
-              <Paper container className={classes.paper}>
-                <Grid
-                  container
-                  justify="flex-start"
-                  direction="column"
-                  alignItems="center"
-                >
-                  <Avatar
-                    alt="Profile Picture"
-                    src="blank-profile.png"
-                    className={classes.avatar}
-                  />
-                  <Typography className={classes.Headings}>
-                    Georgi Facello{/* insert dynamic name here */}
-                  </Typography>
-                  <Typography className={classes.profileTitle}>
-                    Head Cheer Leader{/* insert dynamic position here */}
-                  </Typography>
-                </Grid>
-              </Paper>
-            </Grid>
-            {/* This 8 block is for the right part wth employee 
-            information and settings */}
-            <Grid item xs={8}>
-              <Paper className={classes.paper}>
-                <Grid container>
-                  <Typography className={classes.Headings}>
-                    Personal Settings{/* insert dynamic name here */}
-                  </Typography>
-                  <Divider className={classes.divider} />
-                  <Grid container>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <Typography className={classes.label}>
-                        First Name
-                      </Typography>
-                      <TextField
-                        disabled
-                        variant="outlined"
-                        label="Georgi"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <Typography className={classes.label}>
-                        Last Name
-                      </Typography>
-                      <TextField
-                        disabled
-                        variant="outlined"
-                        label="Facello"
-                        fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <Typography className={classes.label}>
-                        Employee number
-                      </Typography>
-                      <TextField
-                        disabled
-                        variant="outlined"
-                        label="10001"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      variant="outlined"
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <Typography className={classes.label}>
-                        Birth Date
-                      </Typography>
-                      <TextField
-                        disabled
-                        variant="outlined"
-                        label="1953-09-02"
-                        fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Grid container>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <Typography className={classes.label}>
-                        Gender
-                      </Typography>
-                      <TextField
-                        disabled
-                        variant="outlined"
-                        label="M"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    > <Typography className={classes.label}>
-                        Hired Date
-                  </Typography>
-                      <TextField
-                        disabled
-                        variant="outlined"
-                        label="1986-06-26"
-                        fullWidth
-                      />
-                    </Grid>
-                  </Grid>
-
-                  <Typography
-                    className={classes.Headings}
-                    style={{
-                      marginTop: 20,
-                      fontFamily: "typeface-roboto"
-                    }}
-                  >
-                    Employee Settings
-              </Typography>
-                  <Divider className={classes.divider} />
-                  <Grid container direction="column">
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        variant="outlined"
-                        label="Salary"
-                        fullWidth
-                        style={{
-                          paddingRight: 10
-                        }}
-                      />
-                    </Grid>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        select
-                        className={(classes.margin, classes.textField)}
-                        variant="outlined"
-                        label="Position"
-                        value={this.state.position}
-                        onChange={this._handleChange("position")}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">:</InputAdornment>
-                          )
-                        }}
-                      >
-                        {positions.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                    </Grid>
-                  </Grid>
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.saveButton}
-                    onChange
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.salaryButton}
-                    onChange
-                    component={Link}
-                    to="/history"
-                  >
-                    Salary History
-                  </Button>
-
-                </Grid>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-      );
-    }
-  }
-
-  render() {
-    const positions = [
-      {
-        value: "Accountant",
-        label: "Accountant"
-      },
-      {
-        value: "Janitor",
-        label: "Janitor"
-      },
-      {
-        value: "Manager",
-        label: "Manager"
-      },
-      {
-        value: "Lead",
-        label: "Lead"
-      },
-      {
-        value: "Intern",
-        label: "Intern"
-      },
-      {
-        value: "Supervisor",
-        label: "Supervisor"
-      }
-    ];
-
-    const { classes } = this.props;
-    return (
-      <Grid
-        container
-        className={classes.root}
-        spacing={8}
-        direction="column"
-        justify="flex-start"
-        alignItems="center"
-      >
-        <Grid item>
-          <Grid container>
-            <Grid item>
-              <Paper>
-                <Grid
-                  className={classes.searchcontainer}
-                  spacing={8}
-                  direction="column"
-                >
-                  <Grid item>
-                    <Grid
-                      container
-                      className={classes.searchInput}
-                      direction="row"
-                    >
-
-                      <Grid item xs={9}>
-                        <Grid container>
-                          <TextField
-                            variant="outlined"
-                            onChange={text => this.setState({ search: text })}
-                            label="Employee Id"
-                            fullWidth
-                            style={{
-                              paddingRight: 10
-                            }}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Grid
-                        item
-                        xs={2}
-                        className={classes.searchButtonContainer}
-                      >
-                        <Button
-                          variant="contained"
-                          className={classes.searchButton}
-                          color="primary"
-                          onClick={() => {this.getEmployee()} }
-                        >
-                          Search
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Grid>
-        {this.renderUserProfile()}
-      </Grid>
-    );
-  }
-}
 export default withStyles(styles)(Employee);
