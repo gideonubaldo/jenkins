@@ -9,6 +9,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from "@material-ui/core/styles";
 import { withAuth } from "@okta/okta-react";
+import { Link } from "react-router-dom";
+import TwitterLogo from "./TwitterLogo.png";
+import GithubLogo from "./GithubLogo.png";
 
 const styles = {
   root: {
@@ -27,11 +30,11 @@ const styles = {
   },
 };
 
-
 export default withStyles(styles)(
   withAuth(
     class NavBar extends Component {
       state = { authenticated: null , openMenu: false};
+
 
       
       checkAuthentication = async () => {
@@ -56,7 +59,7 @@ export default withStyles(styles)(
       logout = async () => {
         this.props.auth.logout("/");
       };
-      
+
       handleClick = event => {
         this.setState({ openMenu: true });
       }
@@ -65,6 +68,7 @@ export default withStyles(styles)(
         this.setState({
           openMenu: open,
         });
+
       };
 
       handleClose = () => {
@@ -95,9 +99,7 @@ export default withStyles(styles)(
             </Button>
           </div>
         ) : (
-          <div>
-             
-          </div>
+          <div />
         );
         
         return (
@@ -125,6 +127,36 @@ export default withStyles(styles)(
                 >
                   Rocket Pay
                 </Typography>
+                <Link
+                  to="/news"
+                  style={{
+                    color: "inherit",
+                    textDecoration: "inherit",
+                    "&:hover": {
+                      textDecoration: "underline"
+                    }
+                  }}
+                >
+                  <img
+                    src={TwitterLogo}
+                    alt="logo"
+                    style={{
+                      height: "40px",
+                      width: "40px"
+                    }}
+                  />
+                </Link>
+
+                <Link to="/github">
+                  <img
+                    src={GithubLogo}
+                    alt="logo"
+                    style={{
+                      height: "40px",
+                      width: "40px"
+                    }}
+                  />
+                </Link>
                 {logInOut}
               </Toolbar>
             </AppBar>

@@ -44,7 +44,6 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 export class HistoryPage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -53,24 +52,23 @@ export class HistoryPage extends Component {
   }
 
   componentDidMount() {
-    this.getTable()
+    this.getTable();
   }
 
   getTable = async () => {
     const id = {
       emp_no: this.props.id
-    }
-    const url = new URL('http://localhost:3000/api/employeeTable')
-    url.search = new URLSearchParams(id)
-    const response = await fetch(url)
-    const rows = await response.json()
-    this.setState({ rows: rows.result })
-
-  }
+    };
+    const url = new URL("http://localhost:3000/api/employeeTable");
+    url.search = new URLSearchParams(id);
+    const response = await fetch(url);
+    const rows = await response.json();
+    this.setState({ rows: rows.result });
+  };
 
   renderTable() {
     if (this.state.rows !== []) {
-      console.log(this.state.rows)
+      console.log(this.state.rows);
       const { classes } = this.props;
       return this.state.rows.map(row => {
         return (
@@ -82,7 +80,7 @@ export class HistoryPage extends Component {
             <CustomTableCell>{row.to_date.substring(0, 10)}</CustomTableCell>
           </TableRow>
         );
-      })
+      });
     }
   }
 
@@ -116,9 +114,7 @@ export class HistoryPage extends Component {
                       <CustomTableCell>To Date</CustomTableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {this.renderTable()}
-                  </TableBody>
+                  <TableBody>{this.renderTable()}</TableBody>
                 </Table>
               </Grid>
             </Grid>
