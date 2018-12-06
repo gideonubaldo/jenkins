@@ -3,15 +3,17 @@ import React, { Component } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
 import { withAuth } from "@okta/okta-react";
 import { Link } from "react-router-dom";
 import TwitterLogo from "./TwitterLogo.png";
 import GithubLogo from "./GithubLogo.png";
+import Grid from "@material-ui/core/Grid";
+import "typeface-roboto";
 
 const styles = {
   root: {
@@ -19,24 +21,22 @@ const styles = {
   },
   grow: {
     flexGrow: 1,
-    font: "roboto",
+    font: "roboto"
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20
   },
   list: {
-    width: 250,
-  },
+    width: 250
+  }
 };
 
 export default withStyles(styles)(
   withAuth(
     class NavBar extends Component {
-      state = { authenticated: null , openMenu: false};
+      state = { authenticated: null, openMenu: false };
 
-
-      
       checkAuthentication = async () => {
         const authenticated = await this.props.auth.isAuthenticated();
         if (authenticated !== this.state.authenticated) {
@@ -62,13 +62,12 @@ export default withStyles(styles)(
 
       handleClick = event => {
         this.setState({ openMenu: true });
-      }
-    
-      toggleDrawer = (open) => () => {
-        this.setState({
-          openMenu: open,
-        });
+      };
 
+      toggleDrawer = open => () => {
+        this.setState({
+          openMenu: open
+        });
       };
 
       handleClose = () => {
@@ -81,15 +80,36 @@ export default withStyles(styles)(
         const toolDrawer = (
           <div className={classes.list}>
             <List>
-                <ListItem button component="a" href="twitter" target="_blank">
-                    <ListItemText primary="Twitter"/>
-                </ListItem>
-                <ListItem button component="a" href="github" target="_blank">
-                    <ListItemText primary="GitHub"/>
-                </ListItem>
+              <ListItem button component="a" href="twitter" target="_blank">
+                <ListItemText primary="Twitter" />
+                <Link to="/twitter">
+                  <img
+                    src={TwitterLogo}
+                    alt="logo"
+                    style={{
+                      height: "40px",
+                      width: "40px",
+                      paddingRight: 4
+                    }}
+                  />
+                </Link>
+              </ListItem>
+              <ListItem button component="a" href="github" target="_blank">
+                <ListItemText primary="GitHub" />
+                <Link to="/github">
+                  <img
+                    src={GithubLogo}
+                    alt="logo"
+                    style={{
+                      height: "40px",
+                      width: "40px"
+                    }}
+                  />
+                </Link>
+              </ListItem>
             </List>
           </div>
-        )
+        );
 
         if (this.state.authenticated === null) return null;
         const logInOut = this.state.authenticated ? (
@@ -101,14 +121,22 @@ export default withStyles(styles)(
         ) : (
           <div />
         );
-        
+
         return (
           <div className={classes.root}>
             <AppBar position="static">
               <Toolbar>
-                
-                <Button color="inherit" onClick={this.toggleDrawer(true)}>Menu</Button>
-                <Drawer open={this.state.openMenu} onClose={this.toggleDrawer(false)}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.toggleDrawer(true)}
+                >
+                  External Links
+                </Button>
+                <Drawer
+                  open={this.state.openMenu}
+                  onClose={this.toggleDrawer(false)}
+                >
                   <div
                     //tabIndex={0}
                     //role="button"
@@ -117,8 +145,10 @@ export default withStyles(styles)(
                   >
                     {toolDrawer}
                   </div>
-
                 </Drawer>
+                <Button color="inherit" href="/">
+                  Home
+                </Button>
                 <Typography
                   variant="h6"
                   color="inherit"
@@ -127,27 +157,49 @@ export default withStyles(styles)(
                 >
                   Rocket Pay
                 </Typography>
-                <Link
-                  to="/news"
-                  style={{
-                    color: "inherit",
-                    textDecoration: "inherit",
-                    "&:hover": {
-                      textDecoration: "underline"
-                    }
-                  }}
-                >
-                  <img
-                    src={TwitterLogo}
-                    alt="logo"
-                    style={{
-                      height: "40px",
-                      width: "40px"
-                    }}
-                  />
-                </Link>
 
-                <Link to="/github">
+                <Grid Container>
+                  <Grid item>
+                    <Link
+                      to="/news"
+                      style={{
+                        color: "inherit",
+                        textDecoration: "inherit",
+                        "&:hover": {
+                          textDecoration: "underline"
+                        }
+                      }}
+                    >
+                      <Grid container>
+                        <Grid item>
+                          <img
+                            src={TwitterLogo}
+                            alt="logo"
+                            style={{
+                              height: "40px",
+                              width: "40px",
+                              paddingRight: 4
+                            }}
+                          />
+                        </Grid>
+                        <Grid item>
+                          <Typography
+                            variant="title"
+                            style={{
+                              fontSize: "15px",
+                              color: "#ffffff",
+                              paddingTop: 13,
+                              fontWeight: 450
+                            }}
+                          >
+                            NEWS FEED
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Link>
+                  </Grid>
+                </Grid>
+                {/* <Link to="/github">
                   <img
                     src={GithubLogo}
                     alt="logo"
@@ -156,7 +208,7 @@ export default withStyles(styles)(
                       width: "40px"
                     }}
                   />
-                </Link>
+                </Link> */}
                 {logInOut}
               </Toolbar>
             </AppBar>
