@@ -8,6 +8,7 @@ import WebPortal from "./webportal/WebPortal";
 import Login from "./auth/Login";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import theme from "./theme";
+import NewsPage from "./news/News";
 
 const config = {
   issuer: "https://dev-500578.oktapreview.com/oauth2/default",
@@ -16,7 +17,6 @@ const config = {
 };
 
 class App extends Component {
-
   // state = {
   //   response: '',
   //   post: '',
@@ -104,14 +104,23 @@ class App extends Component {
                       component={ImplicitCallback}
                     />
                     <Route path="/portal" component={WebPortal} />
-                    <Route exact path="/history/:id(\d+)" render={(props) => {
-                      const id = props.match.params.id
-                      return <HistoryPage id={id} />
-                    }} />
-                    <Route exact path="/:id(\d+)" render={(props) => {
-                      const id = props.match.params.id
-                      return <HomePage id={id} />
-                    }} />
+                    <Route path="/news" component={NewsPage} />
+                    <Route
+                      exact
+                      path="/history/:id(\d+)"
+                      render={props => {
+                        const id = props.match.params.id;
+                        return <HistoryPage id={id} />;
+                      }}
+                    />
+                    <Route
+                      exact
+                      path="/:id(\d+)"
+                      render={props => {
+                        const id = props.match.params.id;
+                        return <HomePage id={id} />;
+                      }}
+                    />
                   </Switch>
                 </div>
               )}

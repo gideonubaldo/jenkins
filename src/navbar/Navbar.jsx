@@ -9,6 +9,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuIcon from "@material-ui/icons/Menu";
 import { withStyles } from "@material-ui/core/styles";
 import { withAuth } from "@okta/okta-react";
+import { Link } from "react-router-dom";
+import TwitterLogo from "./TwitterLogo.png";
 
 const styles = {
   root: {
@@ -23,11 +25,10 @@ const styles = {
   }
 };
 
-
 export default withStyles(styles)(
   withAuth(
     class NavBar extends Component {
-      state = { authenticated: null , openMenu: null};
+      state = { authenticated: null, openMenu: null };
 
       checkAuthentication = async () => {
         const authenticated = await this.props.auth.isAuthenticated();
@@ -51,11 +52,11 @@ export default withStyles(styles)(
       logout = async () => {
         this.props.auth.logout("/");
       };
-      
+
       handleClick = event => {
         this.setState({ openMenu: event.currentTarget });
-      }
-    
+      };
+
       handleClose = () => {
         this.setState({ openMenu: null });
       };
@@ -69,9 +70,7 @@ export default withStyles(styles)(
             </Button>
           </div>
         ) : (
-          <div>
-             
-          </div>
+          <div />
         );
         const { openMenu } = this.state;
         const { classes } = this.props;
@@ -93,9 +92,15 @@ export default withStyles(styles)(
                   open={Boolean(openMenu)}
                   onClose={this.handleClose}
                 >
-                  <MenuItem><a href="twitter">Twitter</a></MenuItem>
-                  <MenuItem onClick={this.handleClose}><a href="twitter.com">Twitter</a></MenuItem>
-                  <MenuItem onClick={this.handleClose}><a href="twitter.com">Twitter</a></MenuItem>
+                  <MenuItem>
+                    <a href="twitter">Twitter</a>
+                  </MenuItem>
+                  <MenuItem onClick={this.handleClose}>
+                    <a href="twitter.com">Twitter</a>
+                  </MenuItem>
+                  <MenuItem onClick={this.handleClose}>
+                    <a href="twitter.com">Twitter</a>
+                  </MenuItem>
                 </Menu>
                 <Typography
                   variant="h6"
@@ -103,6 +108,25 @@ export default withStyles(styles)(
                   className={classes.grow}
                 >
                   Tabs
+                  <Link
+                    to="/news"
+                    style={{
+                      color: "inherit",
+                      textDecoration: "inherit",
+                      "&:hover": {
+                        textDecoration: "underline"
+                      }
+                    }}
+                  >
+                    <img
+                      src={TwitterLogo}
+                      alt="logo"
+                      style={{
+                        height: "40px",
+                        width: "40px"
+                      }}
+                    />
+                  </Link>
                 </Typography>
                 {logInOut}
               </Toolbar>
