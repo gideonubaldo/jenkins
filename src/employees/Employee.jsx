@@ -242,10 +242,10 @@ class Employee extends Component {
                     Employee Settings
                   </Typography>
                   <Divider className={classes.divider} />
-                  <Grid container direction="column">
+                  <Grid container>
                     <Grid
                       container
-                      xs={6}
+                      xs={12}
                       style={{
                         paddingTop: 20
                       }}
@@ -262,33 +262,6 @@ class Employee extends Component {
                           paddingRight: 10
                         }}
                       />
-                    </Grid>
-                    <Grid
-                      container
-                      xs={6}
-                      style={{
-                        paddingTop: 20
-                      }}
-                    >
-                      <TextField
-                        select
-                        className={(classes.margin, classes.textField)}
-                        variant="outlined"
-                        label="Position"
-                        value={this.state.position}
-                        onChange={this._handleChange("position")}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">:</InputAdornment>
-                          )
-                        }}
-                      >
-                        {positions.map(option => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </TextField>
                     </Grid>
                   </Grid>
 
