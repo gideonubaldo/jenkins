@@ -86,6 +86,11 @@ class App extends Component {
                 path="/twitter"
                 component={() => (window.location = "http://twitter.com")}
               />
+              <Route
+                exact
+                path="/github"
+                component={() => (window.location = "http://github.com")}
+              />
               <Route exact path="/" component={HomePage} />
             </Switch>
             <Route
