@@ -11,7 +11,6 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Link } from "react-router-dom";
-import News from "../news/News";
 
 class Employee extends Component {
   constructor(props) {
@@ -20,18 +19,18 @@ class Employee extends Component {
       search: this.props.id || "",
       first_name: "",
       last_name: "",
-      emp_no:this.props.id || "",
+      emp_no: this.props.id || "",
       birth_date: "",
       gender: "",
       hire_date: "",
       salary: "",
       position: "",
       from_date: "",
-      to_date: "",
+      to_date: ""
     };
 
-    if(this.state.emp_no !== ""){
-      this.getEmployee()
+    if (this.state.emp_no !== "") {
+      this.getEmployee();
     }
   }
 
@@ -47,11 +46,11 @@ class Employee extends Component {
   getEmployee = async () => {
     const id = {
       emp_no: this.state.search
-    }
-    const url = new URL('http://localhost:3000/api/employee')
-    url.search = new URLSearchParams(id)
+    };
+    const url = new URL("http://localhost:3000/api/employee");
+    url.search = new URLSearchParams(id);
     const response = await fetch(url);
-    const body = await response.json()
+    const body = await response.json();
 
     this.setState({
       emp_no: body.result[0].emp_no,
@@ -62,24 +61,22 @@ class Employee extends Component {
       gender: body.result[0].gender,
       salary: body.result[0].salary,
       from_date: body.result[0].from_date.substring(0, 10),
-      to_date: body.result[0].to_date.substring(0, 10),
+      to_date: body.result[0].to_date.substring(0, 10)
     });
-  }
+  };
   //update employee's salary
   saveEmployee = async () => {
-
     const salary = {
       emp_no: this.state.emp_no,
       salary: this.state.salary,
-      from_date: this.state.from_date,
-    }
-    const url = new URL('http://localhost:3000/api/newsalary')
-    url.search = new URLSearchParams(salary)
-    await fetch(url)
-  }
+      from_date: this.state.from_date
+    };
+    const url = new URL("http://localhost:3000/api/newsalary");
+    url.search = new URLSearchParams(salary);
+    await fetch(url);
+  };
 
   renderUserProfile() {
-
     if (this.state.emp_no !== "") {
       const { classes } = this.props;
       return (
@@ -101,7 +98,7 @@ class Employee extends Component {
                     className={classes.avatar}
                   />
                   <Typography className={classes.Headings}>
-                    {this.state.first_name}  {this.state.last_name}
+                    {this.state.first_name} {this.state.last_name}
                   </Typography>
                 </Grid>
               </Paper>
@@ -204,9 +201,7 @@ class Employee extends Component {
                         paddingTop: 20
                       }}
                     >
-                      <Typography className={classes.label}>
-                        Gender
-                      </Typography>
+                      <Typography className={classes.label}>Gender</Typography>
                       <TextField
                         disabled
                         variant="outlined"
@@ -223,9 +218,11 @@ class Employee extends Component {
                       style={{
                         paddingTop: 20
                       }}
-                    > <Typography className={classes.label}>
+                    >
+                      {" "}
+                      <Typography className={classes.label}>
                         Hired Date
-                  </Typography>
+                      </Typography>
                       <TextField
                         disabled
                         variant="outlined"
@@ -243,7 +240,7 @@ class Employee extends Component {
                     }}
                   >
                     Employee Settings
-              </Typography>
+                  </Typography>
                   <Divider className={classes.divider} />
                   <Grid container direction="column">
                     <Grid
@@ -257,7 +254,9 @@ class Employee extends Component {
                         variant="outlined"
                         label="Salary"
                         value={this.state.salary}
-                        onChange={text => this.setState({ salary: text.target.value })}
+                        onChange={text =>
+                          this.setState({ salary: text.target.value })
+                        }
                         fullWidth
                         style={{
                           paddingRight: 10
@@ -297,7 +296,9 @@ class Employee extends Component {
                     variant="contained"
                     color="primary"
                     className={classes.saveButton}
-                    onClick={() => { this.saveEmployee() }}
+                    onClick={() => {
+                      this.saveEmployee();
+                    }}
                   >
                     Save
                   </Button>
@@ -306,11 +307,10 @@ class Employee extends Component {
                     color="primary"
                     className={classes.salaryButton}
                     component={Link}
-                    to={"/history/"  + this.state.emp_no}
+                    to={"/history/" + this.state.emp_no}
                   >
                     Salary History
                   </Button>
-
                 </Grid>
               </Paper>
             </Grid>
@@ -338,12 +338,13 @@ class Employee extends Component {
                     className={classes.searchInput}
                     direction="row"
                   >
-
                     <Grid item xs={9}>
                       <Grid container>
                         <TextField
                           variant="outlined"
-                          onChange={text => this.setState({ search: text.target.value })}
+                          onChange={text =>
+                            this.setState({ search: text.target.value })
+                          }
                           defaultValue={this.state.emp_no}
                           label="Employee Id"
                           fullWidth
@@ -353,19 +354,17 @@ class Employee extends Component {
                         />
                       </Grid>
                     </Grid>
-                    <Grid
-                      item
-                      xs={2}
-                      className={classes.searchButtonContainer}
-                    >
+                    <Grid item xs={2} className={classes.searchButtonContainer}>
                       <Button
                         variant="contained"
                         className={classes.searchButton}
                         color="primary"
-                        onClick={() => { this.getEmployee() }}
+                        onClick={() => {
+                          this.getEmployee();
+                        }}
                       >
                         Search
-                    </Button>
+                      </Button>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -373,7 +372,8 @@ class Employee extends Component {
             </Paper>
           </Grid>
         </Grid>
-      </Grid>)
+      </Grid>
+    );
   }
 
   render() {
@@ -393,7 +393,6 @@ class Employee extends Component {
     );
   }
 }
-
 
 const styles = {
   root: {
@@ -494,6 +493,5 @@ const positions = [
     label: "Supervisor"
   }
 ];
-
 
 export default withStyles(styles)(Employee);
