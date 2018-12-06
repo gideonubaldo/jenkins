@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuIcon from "@material-ui/icons/Menu";
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from "@material-ui/core/styles";
 import { withAuth } from "@okta/okta-react";
 
@@ -15,20 +15,25 @@ const styles = {
     flexGrow: 1
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
+    font: "roboto",
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20
-  }
+  },
+  list: {
+    width: 250,
+  },
 };
 
 
 export default withStyles(styles)(
   withAuth(
     class NavBar extends Component {
-      state = { authenticated: null , openMenu: null};
+      state = { authenticated: null , openMenu: false};
 
+      
       checkAuthentication = async () => {
         const authenticated = await this.props.auth.isAuthenticated();
         if (authenticated !== this.state.authenticated) {
@@ -53,14 +58,35 @@ export default withStyles(styles)(
       };
       
       handleClick = event => {
-        this.setState({ openMenu: event.currentTarget });
+        this.setState({ openMenu: true });
       }
     
+      toggleDrawer = (open) => () => {
+        this.setState({
+          openMenu: open,
+        });
+      };
+
       handleClose = () => {
         this.setState({ openMenu: null });
       };
 
       render() {
+        const { classes } = this.props;
+
+        const toolDrawer = (
+          <div className={classes.list}>
+            <List>
+                <ListItem button component="a" href="twitter" target="_blank">
+                    <ListItemText primary="Twitter"/>
+                </ListItem>
+                <ListItem button component="a" href="github" target="_blank">
+                    <ListItemText primary="GitHub"/>
+                </ListItem>
+            </List>
+          </div>
+        )
+
         if (this.state.authenticated === null) return null;
         const logInOut = this.state.authenticated ? (
           <div>
@@ -73,36 +99,31 @@ export default withStyles(styles)(
              
           </div>
         );
-        const { openMenu } = this.state;
-        const { classes } = this.props;
+        
         return (
           <div className={classes.root}>
             <AppBar position="static">
               <Toolbar>
-                <IconButton
-                  className={classes.menuButton}
-                  color="inherit"
-                  aria-label="Menu"
-                  onClick={this.handleClick}
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="simple-menu"
-                  openMenu={openMenu}
-                  open={Boolean(openMenu)}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem><a href="twitter">Twitter</a></MenuItem>
-                  <MenuItem onClick={this.handleClose}><a href="twitter.com">Twitter</a></MenuItem>
-                  <MenuItem onClick={this.handleClose}><a href="twitter.com">Twitter</a></MenuItem>
-                </Menu>
+                
+                <Button color="inherit" onClick={this.toggleDrawer(true)}>Menu</Button>
+                <Drawer open={this.state.openMenu} onClose={this.toggleDrawer(false)}>
+                  <div
+                    //tabIndex={0}
+                    //role="button"
+                    onClick={this.toggleDrawer(false)}
+                    onKeyDown={this.toggleDrawer(false)}
+                  >
+                    {toolDrawer}
+                  </div>
+
+                </Drawer>
                 <Typography
                   variant="h6"
                   color="inherit"
+                  align="center"
                   className={classes.grow}
                 >
-                  Tabs
+                  Rocket Pay
                 </Typography>
                 {logInOut}
               </Toolbar>
