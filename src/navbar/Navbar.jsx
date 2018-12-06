@@ -11,6 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { withAuth } from "@okta/okta-react";
 import { Link } from "react-router-dom";
 import TwitterLogo from "./TwitterLogo.png";
+import GithubLogo from "./GithubLogo.png";
 
 const styles = {
   root: {
@@ -108,26 +109,37 @@ export default withStyles(styles)(
                   className={classes.grow}
                 >
                   Tabs
-                  <Link
-                    to="/news"
-                    style={{
-                      color: "inherit",
-                      textDecoration: "inherit",
-                      "&:hover": {
-                        textDecoration: "underline"
-                      }
-                    }}
-                  >
-                    <img
-                      src={TwitterLogo}
-                      alt="logo"
-                      style={{
-                        height: "40px",
-                        width: "40px"
-                      }}
-                    />
-                  </Link>
                 </Typography>
+                <Link
+                  to="/news"
+                  style={{
+                    color: "inherit",
+                    textDecoration: "inherit",
+                    "&:hover": {
+                      textDecoration: "underline"
+                    }
+                  }}
+                >
+                  <img
+                    src={TwitterLogo}
+                    alt="logo"
+                    style={{
+                      height: "40px",
+                      width: "40px"
+                    }}
+                  />
+                </Link>
+
+                <Link to="/github">
+                  <img
+                    src={GithubLogo}
+                    alt="logo"
+                    style={{
+                      height: "40px",
+                      width: "40px"
+                    }}
+                  />
+                </Link>
                 {logInOut}
               </Toolbar>
             </AppBar>

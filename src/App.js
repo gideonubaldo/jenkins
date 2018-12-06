@@ -104,6 +104,12 @@ class App extends Component {
                       component={ImplicitCallback}
                     />
                     <Route path="/portal" component={WebPortal} />
+                    <Route
+                      path="/github"
+                      component={() =>
+                        (window.location = "https://github.com/login")
+                      }
+                    />
                     <Route path="/news" component={NewsPage} />
                     <Route
                       exact
